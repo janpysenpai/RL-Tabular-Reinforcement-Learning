@@ -20,6 +20,9 @@ env/
 # Notebooks
 .ipynb_checkpoints/
 
+# Claude-interne Konfiguration
+CLAUDE.md
+
 # Vorlesungsmaterialien (urheberrechtlich geschützt)
 "Übungsaufgaben + Skript"/
 Übungsaufgaben*/
