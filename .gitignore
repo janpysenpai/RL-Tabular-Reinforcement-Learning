@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtuelle Umgebungen
+.venv/
+venv/
+env/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Vorlesungsmaterialien (urheberrechtlich geschützt)
+"Übungsaufgaben + Skript"/
+Übungsaufgaben*/
+
+# Output / Caches
+figures/*.png
+figures/*.pdf
+*.log
+*.npz
+*.npy
