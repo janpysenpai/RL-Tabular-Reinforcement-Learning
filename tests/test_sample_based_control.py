@@ -20,14 +20,12 @@ Hinweis zu Exploration:
 
 from __future__ import annotations
 
-from typing import Optional
-
 import numpy as np
 import pytest
 
 from tabular_rl_project.envs._validation_mdp import build_validation_mdp
 from tabular_rl_project.envs.gridworld import GridWorld
-from tabular_rl_project.envs.mdp_base import FiniteMDP
+from tabular_rl_project.envs.extreme_mdps import make_bias_mdp_for_double_q
 from tabular_rl_project.algos.value_iteration import value_iteration_V
 from tabular_rl_project.algos.q_learning import q_learning
 from tabular_rl_project.algos.sarsa import sarsa
@@ -147,52 +145,12 @@ def test_sarsa_eps_decay_agrees_with_vi(grid_env, Q_star_grid, seed):
 # 3. Double Q-Learning: geringere Overestimation als Q-Learning
 # ------------------------------------------------------------------
 
-class _OverestimationMDP(FiniteMDP):
-    """2 Zustände (0=nicht-terminal, 1=terminal), n_acts Aktionen.
-
-    Alle Aktionen führen von s=0 nach s=1 (terminal) mit Reward N(mean_r, sigma_r).
-    Wahre Q*(0, a) = mean_r für alle Aktionen.
-
-    Overestimation-Bias: E[max_a Q[0,:]] > mean_r nach endlich vielen Proben,
-    weil E[max X_i] ≥ max E[X_i] (Jensen). Double Q-Learning reduziert diesen
-    Bias durch Entkopplung von Selektion und Evaluation.
-    """
-
-    def __init__(self, n_acts: int, mean_r: float, sigma_r: float,
-                 gamma: float = 0.9, env_seed: Optional[int] = None) -> None:
-        super().__init__(gamma)
-        self._env_rng = np.random.default_rng(env_seed)
-        self._mean_r = mean_r
-        self._sigma_r = sigma_r
-
-        self.states = [0, 1]
-        self.actions = list(range(n_acts))
-        self.start_state = 0
-        self.terminal_states = {1}
-        self.allowed_actions = {0: list(range(n_acts)), 1: [0]}
-        self._build_transition_matrix()
-
-    def _build_transition_matrix(self) -> None:
-        n_acts = len(self.actions)
-        P = np.zeros((2, n_acts, 2))
-        R = np.zeros((2, n_acts))
-        P[0, :, 1] = 1.0
-        P[1, :, 1] = 1.0
-        R[0, :] = self._mean_r
-        self.transition_probabilities = P
-        self.expected_rewards = R
-
-    def _sample_reward(self, state: int, action: int, next_state: int) -> float:
-        if state == 0:
-            return float(self._env_rng.normal(self._mean_r, self._sigma_r))
-        return 0.0
-
-
 def test_double_q_less_overestimation():
     """Double Q-Learning hat kleinere Overestimation als Q-Learning.
 
-    Bias-MDP: 10 Aktionen, Reward N(-0.1, 1.0). Wahre Q*(0,a) = -0.1.
-    Epsilon=1.0 (uniform) stellt gleiche Besuchsfrequenz aller Aktionen sicher.
+    Bias-MDP aus envs.extreme_mdps: 10 Aktionen, Reward N(-0.1, 1.0).
+    Wahre Q*(0,a) = -0.1. Epsilon=1.0 (uniform) stellt gleiche
+    Besuchsfrequenz aller Aktionen sicher.
     Mit 50 Seeds muss E[max_double] < E[max_single] gelten.
     """
     N_ACTS = 10
@@ -206,7 +164,7 @@ def test_double_q_less_overestimation():
     max_double = []
 
     for seed in range(N_SEEDS):
-        env_q = _OverestimationMDP(N_ACTS, MEAN_R, SIGMA_R, gamma=0.9, env_seed=seed)
+        env_q = make_bias_mdp_for_double_q(N_ACTS, MEAN_R, SIGMA_R, gamma=0.9, env_seed=seed)
         Q, _ = q_learning(
             env_q,
             alpha=constant(ALPHA),
@@ -217,7 +175,7 @@ def test_double_q_less_overestimation():
         )
         max_single.append(float(Q[0, :].max()))
 
-        env_dq = _OverestimationMDP(N_ACTS, MEAN_R, SIGMA_R, gamma=0.9, env_seed=seed)
+        env_dq = make_bias_mdp_for_double_q(N_ACTS, MEAN_R, SIGMA_R, gamma=0.9, env_seed=seed)
         _, _, Q_avg, _ = double_q_learning(
             env_dq,
             alpha=constant(ALPHA),
