@@ -202,10 +202,13 @@ class GridWorld(FiniteMDP):
                 facecolor=facecolor, edgecolor="#555555", linewidth=0.8,
             )
             ax.add_patch(rect)
-            ax.text(
-                c + 0.5, y + 0.5, label,
-                ha="center", va="center", fontsize=8, color="#2c3e50",
-            )
+            # Main label at top of cell, leaving center free for policy arrows
+            main, *rest = label.split("\n", 1)
+            ax.text(c + 0.5, y + 0.72, main,
+                    ha="center", va="center", fontsize=8, color="#2c3e50")
+            if rest:
+                ax.text(c + 0.5, y + 0.22, rest[0],
+                        ha="center", va="center", fontsize=6.5, color="#2c3e50")
 
         # Gitterlinien
         for x in range(self.cols + 1):
@@ -241,14 +244,17 @@ class GridWorld(FiniteMDP):
         """
         ax = self.visualize_layout(ax=ax, title=title)
 
+        _DELTA = {0: (0, 0.24), 1: (0, -0.24), 2: (-0.24, 0), 3: (0.24, 0)}
         for s, a in policy.items():
             r, c = self._to_rc(s)
             if s in self.terminal_states:
                 continue
             y = self.rows - 1 - r
-            ax.text(
-                c + 0.5, y + 0.5, self._ARROW[a],
-                ha="center", va="center", fontsize=14, color="#1a5276",
+            dx, dy = _DELTA[a]
+            ax.annotate(
+                "", xy=(c + 0.5 + dx, y + 0.5 + dy),
+                xytext=(c + 0.5, y + 0.5),
+                arrowprops=dict(arrowstyle="->", color="#1a5276", lw=1.5),
             )
 
         if save_path:

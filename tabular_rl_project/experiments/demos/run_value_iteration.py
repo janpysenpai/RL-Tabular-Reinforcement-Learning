@@ -40,7 +40,8 @@ def _plot_v_heatmap_policy(
     vmax = max(v_non_term) if v_non_term else 1.0
     norm = mcolors.Normalize(vmin=vmin, vmax=vmax)
 
-    arrow_delta = {0: (0, 0.28), 1: (0, -0.28), 2: (-0.28, 0), 3: (0.28, 0)}
+    # Arrow delta: 0.22 units from center — stays clear of value (y+0.82) and label (y+0.15)
+    arrow_delta = {0: (0, 0.22), 1: (0, -0.22), 2: (-0.22, 0), 3: (0.22, 0)}
 
     for s in env.states:
         r, c = env._to_rc(s)
@@ -62,18 +63,17 @@ def _plot_v_heatmap_policy(
         )
         ax.add_patch(rect)
 
-        # V*-Wert
+        # V*-Wert ganz oben, Label ganz unten — Mitte frei für Pfeil
         text_color = "white" if (is_start or is_term) else "black"
-        ax.text(c + 0.5, y + 0.72, f"{V[s]:.3f}",
+        ax.text(c + 0.5, y + 0.82, f"{V[s]:.3f}",
                 ha="center", va="center", fontsize=8, color=text_color)
 
-        # Zellenbezeichnung
         label = "S" if is_start else ("G" if is_term else f"({r},{c})")
-        ax.text(c + 0.5, y + 0.28, label,
+        ax.text(c + 0.5, y + 0.15, label,
                 ha="center", va="center", fontsize=7,
                 color="white" if (is_start or is_term) else "#444444")
 
-        # Policy-Pfeil (nicht in Terminalzustand)
+        # Policy-Pfeil in der Zellmitte (nicht in Terminalzustand)
         if not is_term:
             action = int(np.argmax(policy[s]))
             dx, dy = arrow_delta[action]

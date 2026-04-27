@@ -223,19 +223,19 @@ class GridWorld4x4Submission(FiniteMDP):
 
             if s == _fake_goal_s:
                 fc = COLORS["fake_goal"]
-                label = f"F\nR={FAKE_GOAL_REWARD}"
+                main_lbl, sub_lbl = "F", f"R={FAKE_GOAL_REWARD}"
             elif s == _goal_s:
                 fc = COLORS["goal"]
-                label = f"G\nR={GOAL_REWARD}"
+                main_lbl, sub_lbl = "G", f"R={GOAL_REWARD}"
             elif s == _start_s:
                 fc = COLORS["start"]
-                label = "S"
+                main_lbl, sub_lbl = "S", ""
             elif s in self.sr_states:
                 fc = COLORS["sr"]
-                label = "SR\nR∈{-2.1,2}"
+                main_lbl, sub_lbl = "SR", "R∈{-2.1,+2}"
             else:
                 fc = COLORS["default"]
-                label = f"({r},{c})"
+                main_lbl, sub_lbl = f"({r},{c})", ""
 
             rect = mpatches.FancyBboxPatch(
                 (c + 0.05, y + 0.05), 0.9, 0.9,
@@ -243,8 +243,12 @@ class GridWorld4x4Submission(FiniteMDP):
                 facecolor=fc, edgecolor="#555555", linewidth=0.8,
             )
             ax.add_patch(rect)
-            ax.text(c + 0.5, y + 0.5, label,
+            # Main label at top, sub-label at bottom — center stays free for arrows
+            ax.text(c + 0.5, y + 0.72, main_lbl,
                     ha="center", va="center", fontsize=8, color="#2c3e50")
+            if sub_lbl:
+                ax.text(c + 0.5, y + 0.22, sub_lbl,
+                        ha="center", va="center", fontsize=6.5, color="#2c3e50")
 
         for x in range(COLS + 1):
             ax.axvline(x, color="#cccccc", linewidth=0.5)
@@ -269,6 +273,7 @@ class GridWorld4x4Submission(FiniteMDP):
     ) -> plt.Axes:
         """Zeichnet die Greedy-Policy aus Q als Pfeile."""
         ax = self.visualize_layout(ax=ax, title=title)
+        _DELTA = {0: (0, 0.26), 1: (0, -0.26), 2: (-0.26, 0), 3: (0.26, 0)}
         for s in self.states:
             if s in self.terminal_states:
                 continue
@@ -276,6 +281,10 @@ class GridWorld4x4Submission(FiniteMDP):
             y = ROWS - 1 - r
             acts = self.allowed_actions[s]
             best = acts[int(np.argmax(Q[s, acts]))]
-            ax.text(c + 0.5, y + 0.5, self._ARROW[best],
-                    ha="center", va="center", fontsize=14, color="#1a5276")
+            dx, dy = _DELTA[best]
+            ax.annotate(
+                "", xy=(c + 0.5 + dx, y + 0.5 + dy),
+                xytext=(c + 0.5, y + 0.5),
+                arrowprops=dict(arrowstyle="->", color="#1a5276", lw=1.8),
+            )
         return ax

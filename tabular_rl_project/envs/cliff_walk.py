@@ -203,7 +203,8 @@ class CliffWalk(FiniteMDP):
                 facecolor=facecolor, edgecolor="#555555", linewidth=0.8,
             )
             ax.add_patch(rect)
-            ax.text(c + 0.5, y + 0.5, label, ha="center", va="center",
+            # Label at bottom of cell so policy arrows at center don't overlap
+            ax.text(c + 0.5, y + 0.20, label, ha="center", va="center",
                     fontsize=7, color="#2c3e50")
 
         for x in range(self.cols + 1):
@@ -227,6 +228,7 @@ class CliffWalk(FiniteMDP):
     ) -> plt.Axes:
         """Zeichnet die Greedy-Policy aus Q als Pfeile."""
         ax = self.visualize_layout(ax=ax, title=title)
+        _DELTA = {0: (0, 0.26), 1: (0, -0.26), 2: (-0.26, 0), 3: (0.26, 0)}
         for s in self.states:
             if s in self.terminal_states or s in self.cliff_states:
                 continue
@@ -234,6 +236,10 @@ class CliffWalk(FiniteMDP):
             y = self.rows - 1 - r
             acts = self.allowed_actions[s]
             best = acts[int(np.argmax(Q[s, acts]))]
-            ax.text(c + 0.5, y + 0.5, self._ARROW[best],
-                    ha="center", va="center", fontsize=10, color="#1a5276")
+            dx, dy = _DELTA[best]
+            ax.annotate(
+                "", xy=(c + 0.5 + dx, y + 0.5 + dy),
+                xytext=(c + 0.5, y + 0.5),
+                arrowprops=dict(arrowstyle="->", color="#1a5276", lw=1.5),
+            )
         return ax

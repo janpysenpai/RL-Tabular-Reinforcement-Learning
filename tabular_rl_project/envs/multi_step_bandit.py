@@ -266,7 +266,7 @@ class MultiStepBandit(FiniteMDP):
             mpatches.Patch(facecolor="#a9dfbf", edgecolor="#555555", label="Terminal"),
             mpatches.Patch(facecolor="#fdfefe", edgecolor="#555555", label="Aktiver Knoten"),
         ]
-        ax.legend(handles=legend_patches, loc="lower right", fontsize=7)
+        ax.legend(handles=legend_patches, loc="upper left", fontsize=7)
 
         if save_path:
             plt.savefig(save_path, bbox_inches="tight", dpi=150)
