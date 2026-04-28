@@ -1,0 +1,35 @@
+{
+  "hyperparameters": {
+    "gamma": 0.9,
+    "n_seeds": 5,
+    "ql_episodes": 3000,
+    "ql_snap": 50,
+    "ac_outer_iter": 30,
+    "critic_ep": 300,
+    "alpha": 0.1,
+    "epsilon": 0.1
+  },
+  "v_star_start": 0.6561000000000001,
+  "results": {
+    "VI": {
+      "final_v_hat": 0.6561000000000001,
+      "policy_correct": 1.0
+    },
+    "Q-Learning": {
+      "final_v_hat": 0.5264999999999986,
+      "policy_correct": 0.14285714285714285
+    },
+    "AC+IPE": {
+      "final_v_hat": 0.6561000000000001,
+      "policy_correct": 1.0
+    },
+    "AC+TD(0)": {
+      "final_v_hat": 0.5264999999941984,
+      "policy_correct": 0.35714285714285715
+    },
+    "AC+MC": {
+      "final_v_hat": 0.5265000000000001,
+      "policy_correct": 0.35714285714285715
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "ql_noise=False": {
+    "best_alpha": 0.1,
+    "best_epsilon": 0.1,
+    "best_mean_return": 0.49894989703301507,
+    "best_std_return": 0.005124374637625828
+  },
+  "dql_noise=False": {
+    "best_alpha": 0.1,
+    "best_epsilon": 0.1,
+    "best_mean_return": 0.48522989428008234,
+    "best_std_return": 0.0032831432470054323
+  },
+  "ql_noise=True": {
+    "best_alpha": 0.3,
+    "best_epsilon": 0.1,
+    "best_mean_return": 0.5550728818549129,
+    "best_std_return": 0.03454623692572839
+  },
+  "dql_noise=True": {
+    "best_alpha": 0.1,
+    "best_epsilon": 0.1,
+    "best_mean_return": 0.5000523436088816,
+    "best_std_return": 5.7826499707647194e-05
+  },
+  "hyperparameters": {
+    "gamma": 0.9,
+    "n_seeds": 2,
+    "n_episodes": 200,
+    "max_steps": 200,
+    "last_n_for_metric": 200,
+    "alpha_grid": [
+      0.1,
+      0.3
+    ],
+    "epsilon_grid": [
+      0.1,
+      0.2
+    ]
+  }
+}

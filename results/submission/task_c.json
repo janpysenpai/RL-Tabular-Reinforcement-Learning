@@ -1,0 +1,17 @@
+{
+  "hyperparameters": {
+    "n_seeds": 5,
+    "alpha": 0.1,
+    "epsilon": 0.1,
+    "n_ep_cliff": 500,
+    "n_ep_bias": 1000
+  },
+  "results": {
+    "backprop_v_s0_iter30": 0.6634204312890623,
+    "cliff_sarsa_final_return": -21.970000000000006,
+    "cliff_ql_final_return": -60.870000000000005,
+    "bias_ql_final_max_q": -0.046583216588073295,
+    "bias_dql_final_max_q": -0.05420321662977669,
+    "bias_true_q": -0.1
+  }
+}
