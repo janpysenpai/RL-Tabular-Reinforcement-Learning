@@ -12,8 +12,6 @@ Sample-basiert (Skript Kap. 2/4):
     q_learning                    Algorithm 18 (Q-Learning)
     double_q_learning             Double-Q-Learning (Bias Problem, Blatt 7/8)
     sarsa                         Algorithm 20
-    n_step_td                     n-step TD (Blatt 8 Aufgabe 3a)
-    n_step_sarsa                  n-step SARSA (Blatt 8 Aufgabe 3b)
     actor_critic                  General Actor-Critic (Blatt 7 Aufg. 3, Algorithm 11)
 
 Hilfsmodule:

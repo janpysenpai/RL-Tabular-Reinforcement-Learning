@@ -17,8 +17,9 @@ env/
 .vscode/
 *.swp
 
-# Notebooks
+# Notebooks / Test-Caches
 .ipynb_checkpoints/
+.pytest_cache/
 
 # Claude-interne Konfiguration (nicht für Abgabe relevant)
 CLAUDE.md
