@@ -1,8 +1,8 @@
 {
   "hyperparameters": {
     "gamma": 0.9,
-    "n_episodes": 800,
-    "n_seeds": 3,
+    "n_episodes": 3000,
+    "n_seeds": 5,
     "snapshot_every": 50,
     "max_steps": 200
   },
@@ -17,12 +17,12 @@
       "final_std": 0.0
     },
     "\u03b1=1/n": {
-      "final_mean": 0.5154964825247327,
-      "final_std": 0.0033465681132541464
+      "final_mean": 0.5237661601806888,
+      "final_std": 0.0011695220264280777
     },
     "\u03b1=1/n^0.75": {
-      "final_mean": 0.5264994728494915,
-      "final_std": 2.566412799122394e-07
+      "final_mean": 0.5264999998721777,
+      "final_std": 9.339869231055474e-11
     }
   },
   "eps_results": {
@@ -34,13 +34,13 @@
       "final_mean": 0.5264999999999986,
       "final_std": 0.0
     },
-    "\u03b5=decay(0.5\u21920.01,T=400)": {
+    "\u03b5=decay(0.5\u21920.01,T=1500)": {
       "final_mean": 0.5264999999999986,
       "final_std": 0.0
     },
     "uniform behaviour": {
-      "final_mean": 0.6560998331781932,
-      "final_std": 1.1332240533880136e-08
+      "final_mean": 0.6560999999999979,
+      "final_std": 0.0
     }
   }
 }

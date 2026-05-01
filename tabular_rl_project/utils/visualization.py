@@ -5,6 +5,7 @@
     - animate_evolution(history)                 Schrittweise Entwicklung
                                                  (Backpropagation, Blatt 5 Aufg. 5)
     - render_multi_step_bandit_policy(env, policy)
-"""
 
-# TODO
+Nicht implementiert; GridWorld-Visualisierungen sind direkt in
+envs/gridworld.py (visualize_layout, visualize_policy) enthalten.
+"""

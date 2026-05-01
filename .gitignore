@@ -20,16 +20,22 @@ env/
 # Notebooks
 .ipynb_checkpoints/
 
-# Claude-interne Konfiguration
+# Claude-interne Konfiguration (nicht für Abgabe relevant)
 CLAUDE.md
+.claude/
 
 # Vorlesungsmaterialien (urheberrechtlich geschützt)
 "Übungsaufgaben + Skript"/
 Übungsaufgaben*/
 
 # Output / Caches
+# figures/submission/ und results/submission/ sind NICHT ignoriert
+# (werden für den schriftlichen Teil benötigt).
+# figures/*.png und results/*.json ignorieren Demo-Artefakte der obersten Ebene.
 figures/*.png
 figures/*.pdf
+results/*.json
+results/*.png
 *.log
 *.npz
 *.npy

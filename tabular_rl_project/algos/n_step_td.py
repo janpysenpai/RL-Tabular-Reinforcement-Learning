@@ -5,6 +5,6 @@ Update startet erst nach n Schritten der MDP-Trajektorie:
               + gamma^n V(S_{t+n})
     V(S_t) <- V(S_t) + alpha * (G_t^{(n)} - V(S_t))
 und analog für Q.
-"""
 
-# TODO: n_step_td_V / n_step_td_Q
+Nicht Teil der gewählten Submission-Tasks; Modul ist als Platzhalter vorhanden.
+"""
