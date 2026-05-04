@@ -134,4 +134,4 @@ Submission-Texte stammen vom Autor.
 
 ## Autor
 
-Jan Salama, Universität Mannheim, FSS 2026
+Jan Salama und Malte Schröter, Universität Mannheim, FSS 2026
